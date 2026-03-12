@@ -10,7 +10,7 @@ const vite = await createViteServer({
 
 app.use(vite.middlewares)
 
-app.use('*', async (req: Request, res: Response) => {
+app.use(async (req: Request, res: Response) => {
     const url = req.originalUrl
     let template = fs.readFileSync('index.html', 'utf-8')
     template = await vite.transformIndexHtml(url, template)
