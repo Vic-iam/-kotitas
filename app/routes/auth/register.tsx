@@ -8,5 +8,5 @@ export function meta({ }: Route.MetaArgs) {
 }
 
 export default function Register() {
-    return <div>RegisterPage</div>;
+    return <div className="bg-red-500">RegisterPage</div>;
 }
