@@ -14,7 +14,6 @@ const vite = await createViteServer({
 })
 
 
-
 app.use(vite.middlewares)
 
 app.use(async (req: Request, res: Response) => {

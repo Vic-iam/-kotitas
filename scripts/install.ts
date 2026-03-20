@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import pool from '../src/core/database';
+import pool from '../database';
 
 
 export default async function install() {
@@ -21,12 +21,8 @@ export default async function install() {
         for (const file of files) {
             const filePath = path.join(migrationsDir, file);
             const sql = fs.readFileSync(filePath, 'utf8');
-
             console.log(`Running migration: ${file}...`);
-
-            // Execute the SQL content
             await client.query(sql);
-
             console.log(`Successfully applied ${file}`);
         }
 
