@@ -2,13 +2,18 @@ import express, { Request, Response } from 'express'
 import { createServer as createViteServer } from 'vite'
 import fs from "node:fs"
 import dotenv from "dotenv"
+import install from './scripts/install'
 
 dotenv.config()
 const app = express()
+await install()
+
 const vite = await createViteServer({
     server: { middlewareMode: true },
     appType: 'custom',
 })
+
+
 
 app.use(vite.middlewares)
 

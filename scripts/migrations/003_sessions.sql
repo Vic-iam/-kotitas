@@ -8,8 +8,9 @@ CREATE TABLE IF NOT EXISTS sessions (
     created_ip          TEXT NOT NULL,
     created_ua          TEXT NOT NULL,
     last_seen_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    last_seen_ip        TEXT NOT NULL,
+    last_seen_ip        TEXT NOT NULL
 );
+
 
 
 

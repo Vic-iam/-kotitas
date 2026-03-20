@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS company (
 
 
 CREATE TABLE IF NOT EXISTS user_company_roles (
-    user_id UUID NOT NULL REFERENCES  users(id),
+    user_id UUID NOT NULL REFERENCES  user_profiles(id),
     company_id UUID NOT NULL REFERENCES company(id),
     role VARCHAR(50) NOT NULL
 );
