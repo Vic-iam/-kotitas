@@ -1,64 +1,54 @@
 @import "tailwindcss";
 
-
 @theme {
-  /* Brand */
-  --color-primary:      hsl(243 75% 59%);
-  --color-primary-dark: hsl(243 75% 49%);
-  --color-primary-fg:   hsl(0 0% 100%);
-
-  /* Surfaces */
-  --color-background: hsl(220 20% 97%);
-  --color-surface:    hsl(0 0% 100%);
-
-  /* Borders */
-  --color-border:     hsl(220 15% 88%);
-
-  /* Text */
-  --color-text:       hsl(220 20% 12%);
-  --color-text-muted: hsl(220 10% 50%);
-
-  /* Semantic */
-  --color-error:      hsl(0 72% 51%);
-  --color-success:    hsl(142 71% 45%);
-  --color-warning:    hsl(38 92% 50%);
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-primary-fg: var(--color-primary-fg);
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-border: var(--color-border);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-error: var(--color-error);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
 }
 
+:root {
+  --color-primary: hsl(243 85% 75%);
+  --color-primary-dark: hsl(243 75% 49%);
+  --color-primary-fg: hsl(0 0% 100%);
+  --color-background: hsl(220 20% 97%);
+  --color-surface: hsl(0 0% 100%);
+  --color-border: hsl(220 15% 88%);
+  --color-text: hsl(220 20% 12%);
+  --color-text-muted: hsl(220 10% 50%);
+  --color-error: hsl(0 72% 51%);
+  --color-success: hsl(142 71% 45%);
+  --color-warning: hsl(38 92% 50%);
+}
+
+/* --- DARK THEME --- */
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --color-primary:      hsl(243 85% 75%);
-    --color-primary-dark: hsl(243 85% 65%);
-    --color-primary-fg:   hsl(0 0% 100%);
-
     --color-background: hsl(224 20% 10%);
-    --color-surface:    hsl(224 15% 15%);
-
-    --color-border:     hsl(224 15% 22%);
-
-    --color-text:       hsl(220 15% 92%);
+    --color-surface: hsl(224 15% 15%);
+    --color-border: hsl(224 15% 22%);
+    --color-text: hsl(220 15% 92%);
     --color-text-muted: hsl(220 10% 55%);
-
-    --color-error:      hsl(0 72% 65%);
-    --color-success:    hsl(142 60% 55%);
-    --color-warning:    hsl(38 90% 60%);
   }
 }
 
 :root.dark {
-  --color-primary:      hsl(243 85% 75%);
-  --color-primary-dark: hsl(243 85% 65%);
-  --color-primary-fg:   hsl(0 0% 100%);
-
   --color-background: hsl(224 20% 10%);
-  --color-surface:    hsl(224 15% 15%);
-
-  --color-border:     hsl(224 15% 22%);
-
-  --color-text:       hsl(220 15% 92%);
+  --color-surface: hsl(224 15% 15%);
+  --color-border: hsl(224 15% 22%);
+  --color-text: hsl(220 15% 92%);
   --color-text-muted: hsl(220 10% 55%);
-
-  --color-error:      hsl(0 72% 65%);
-  --color-success:    hsl(142 60% 55%);
-  --color-warning:    hsl(38 90% 60%);
 }
 
+@layer base {
+  html {
+    @apply bg-background text-text transition-colors duration-200;
+  }
+}
