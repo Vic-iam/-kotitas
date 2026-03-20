@@ -11,15 +11,15 @@ export function meta({ }: Route.MetaArgs) {
 export default function Login() {
     return (
 
-        <div className="flex justify-center items-center flex-col">
+        <div className="flex justify-center gap-5 items-center flex-col bg min-h-screen text-[var(--color-text)] shadow-md shadow-[var(--color-surface)]">
 
-            <h1>Login page</h1>
-            
-            <form className="flex flex-col">
+            <form className="flex flex-col bg-primary p-10 text-xl rounded-sm">
+                <h1 className="text-xl">Login page</h1>
+
                 <label>Usuario</label>
-                <input />
+                <input className="border-2 border-[var(--color-border)]" />
                 <label>Contraseña</label>
-                <input />
+                <input className="border" />
             </form>
 
         </div>
