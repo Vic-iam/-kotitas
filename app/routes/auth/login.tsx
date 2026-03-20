@@ -9,5 +9,20 @@ export function meta({ }: Route.MetaArgs) {
 }
 
 export default function Login() {
-    return <div>Login page</div>;
+    return (
+
+        <div className="flex justify-center items-center flex-col">
+
+            <h1>Login page</h1>
+            
+            <form className="flex flex-col">
+                <label>Usuario</label>
+                <input />
+                <label>Contraseña</label>
+                <input />
+            </form>
+
+        </div>
+
+    )
 }
