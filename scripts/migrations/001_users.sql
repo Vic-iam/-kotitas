@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS user_profiles (
+    id UUID PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE
+);
+

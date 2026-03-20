@@ -1,5 +1,6 @@
+
 CREATE TABLE IF NOT EXISTS identities (
-    id TEXT PRIMARY KEY,
+    id UUID PRIMARY KEY,
     email TEXT NOT NULL UNIQUE,
     hash BYTEA,
     salt BYTEA,
