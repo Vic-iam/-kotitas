@@ -23,7 +23,7 @@ const PasswordInput = ({...props}) => {
           onMouseLeave={() => setShowPassword(false)}
           onTouchStart={() => setShowPassword(true)}
           onTouchEnd={() => setShowPassword(false)}
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+          className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
           >
           {showPassword ? <FaEyeSlash /> : <FaEye/> }
         </button>
