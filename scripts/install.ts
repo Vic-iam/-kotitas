@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import pool from '../database';
+import pool from '../app/db.server';
 
 
 export default async function install() {

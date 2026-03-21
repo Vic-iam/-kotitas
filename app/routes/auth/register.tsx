@@ -3,6 +3,9 @@ import type { Route } from "./+types/register";
 import { Button } from "~/components/ui/button";
 import { Form, useNavigation, type ActionFunctionArgs } from "react-router";
 import Loader from "~/components/ui/loader";
+import { Identity, type Credentials } from "~/domain/identity/identity.server";
+import IdentityRepo from "~/application/repos/identity_repo.server";
+import pool from "~/infra/db.server";
 
 export function meta({ }: Route.MetaArgs) {
     return [
@@ -12,9 +15,26 @@ export function meta({ }: Route.MetaArgs) {
 }
 
 export async function action({ request }: ActionFunctionArgs) {
-    const data = await request.formData()
-    console.log(data)
-    return new Promise<number>((resolve, _) => setTimeout(() => resolve(0), 3000))
+    const form = await request.formData()
+    const data = {
+        email: form.get("email") as string,
+        password: form.get("password") as string,
+    }
+    const db = await pool.connect()
+    const repo = new IdentityRepo()
+    const exists = await repo.exists(db, data.email)
+    if (exists) {
+        return
+        // Mostrar error de usuario ya existe al cliente
+    }
+
+    const user = await Identity.create(data)
+    await repo.save(db, user)
+
+    // Usuario guardado hay que hacer algo con eso, iniciar session
+    // O redireccionarlo. O lo que queramos hacer
+    return
+
 }
 
 export default function Register() {
@@ -42,18 +62,29 @@ export default function Register() {
                         }>
                         <div>
                             <label>Usuario</label>
-                            <Input />
+                            <Input
+                                type="email"
+                                name="email"
+                                placeholder="email@example.com"
+                            />
 
                         </div>
-
                         <div>
                             <label>Contraseña</label>
-                            <Input name="password" type="password" />
+                            <Input
+                                name="password"
+                                type="password"
+                                placeholder="**********"
+                            />
                         </div>
 
                         <div>
                             <label>Repetir contraseña</label>
-                            <Input type="password" />
+                            <Input
+                                name="re-password"
+                                type="password"
+                                placeholder="**********"
+                            />
                         </div>
                         <Button type="submit">
                             Guardar
