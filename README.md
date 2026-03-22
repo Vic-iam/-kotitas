@@ -1,4 +1,4 @@
-# +Kotitas: Software empresarial de veterinarias
+# Software empresarial de veterinarias
 
 ## Instalacion
  
