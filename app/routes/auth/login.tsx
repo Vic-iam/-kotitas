@@ -55,9 +55,10 @@ export default function Login() {
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData, e: any) => {
-    e?.target.submit();
-  };
+    const onSubmit = (data: FormData, e: any) => {
+        e?.target.submit();
+    };
+
 
   return (
     <div className="flex w-full min-h-[100svh] items-center justify-center">
@@ -134,6 +135,8 @@ export default function Login() {
               {isSubmitting ? "Ingresando..." : "Iniciar sesión"}
             </Button>
 
+
+          {/* No sirve */}
             <p className="text-xs text-center">
               ¿No tienes cuenta?
               <Link to="/auth/register"> Registrate ahora</Link>
