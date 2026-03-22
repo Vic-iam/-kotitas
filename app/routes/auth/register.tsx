@@ -2,6 +2,7 @@
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import PasswordInput from "~/components/ui/passwordInput";
+import { GoChevronLeft } from "react-icons/go";
 
 // Tipos de React Router
 import type { Route } from "./+types/register";
@@ -29,10 +30,6 @@ import pool from "~/infra/db.server";
 
 // Manejo de formularios
 import { useForm } from "react-hook-form";
-
-// Hook de estado de React
-import { useState } from "react";
-import { get } from "http";
 
 
 /**
@@ -140,6 +137,8 @@ export default function Register() {
                 isSubmitting ? <Loader /> :
 
                     <div className="space-y-4">
+
+                        <Link to="/" className="flex items-center">< GoChevronLeft/>Volver</Link>
 
                         {/* Título */}
                         <h1 className="text-xl text-foreground text-center">

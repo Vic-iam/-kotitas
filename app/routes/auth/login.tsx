@@ -12,6 +12,7 @@ import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { useForm } from "react-hook-form";
 import PasswordInput from "~/components/ui/passwordInput";
+import { GoChevronLeft } from "react-icons/go";
 
 type FormData = {
   email: string;
@@ -67,6 +68,8 @@ export default function Login() {
         <Loader />
       ) : (
         <div className="space-y-4">
+
+          <Link to="/" className="flex items-center">< GoChevronLeft/>Volver</Link>
 
           <h1 className="text-xl text-center">
             Iniciar sesión
