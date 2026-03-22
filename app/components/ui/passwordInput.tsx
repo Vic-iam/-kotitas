@@ -11,14 +11,13 @@ const PasswordInput = ({...props}) => {
       <div className="relative">
         <Input
         {...props}
+        className="pr-10"
         type={showPassword ? "text" : "password"}
-          className="pr-10"
-          placeholder="**********"
-
         />
         <button
           type="button"
-          onMouseDown={() => setShowPassword(true)}
+          onMouseDown={(e) => {e.preventDefault;
+            setShowPassword(true)}}
           onMouseUp={() => setShowPassword(false)}
           onMouseLeave={() => setShowPassword(false)}
           onTouchStart={() => setShowPassword(true)}
