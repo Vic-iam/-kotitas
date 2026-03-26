@@ -26,20 +26,28 @@ export function meta({ }: Route.MetaArgs) {
   ];
 }
 
+import { authService } from "../../application/services/auth_service.server";
+import { createAuthenticatedSession } from "../../infra/auth.server";
+
 /**
  * ACTION (backend)
  */
 export async function action({ request }: ActionFunctionArgs) {
   const form = await request.formData();
 
-  const email = form.get("email");
-  const password = form.get("password");
+  const email = form.get("email") as string;
+  const password = form.get("password") as string;
 
   if (!email || !password) {
     return { error: "Todos los campos son obligatorios" };
   }
 
-  return;
+  try {
+    const user = await authService.login(email, password);
+    return await createAuthenticatedSession(request, user.id, "/app/profile");
+  } catch (error: any) {
+    return { error: error.message || "Credenciales inválidas" };
+  }
 }
 
 /**

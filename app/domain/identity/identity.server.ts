@@ -48,6 +48,27 @@ export class Identity {
     }
 
 
+    public async checkPassword(password: string): Promise<boolean> {
+        try {
+            return await argon2.verify(this._hash, password);
+        } catch (err) {
+            console.error("Error verifying password:", err);
+            return false;
+        }
+    }
+
+    public static fromDB(data: any): Identity {
+        return new Identity(
+            data.id,
+            data.email,
+            data.salt,
+            data.cycles,
+            data.hash,
+            data.created_at ? new Date(data.created_at) : undefined,
+            data.updated_at ? new Date(data.updated_at) : undefined,
+        );
+    }
+
     private static async hashPassword(
         password: string,
         salt: Buffer<ArrayBufferLike>,

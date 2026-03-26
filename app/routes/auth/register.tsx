@@ -19,17 +19,11 @@ import {
 // Loader visual mientras se envía el formulario
 import Loader from "~/components/ui/loader";
 
-// Lógica de dominio (creación de usuario)
-import { Identity } from "~/domain/identity/identity.server";
-
-// Repositorio para persistir en DB
-import IdentityRepo from "~/application/repos/identity_repo.server";
-
-// Conexión a base de datos
-import pool from "~/infra/db.server";
-
 // Manejo de formularios
 import { useForm } from "react-hook-form";
+
+import { authService } from "../../application/services/auth_service.server";
+import { createAuthenticatedSession } from "../../infra/auth.server";
 
 
 /**
@@ -48,8 +42,8 @@ type FormData = {
  */
 export function meta({ }: Route.MetaArgs) {
     return [
-        { title: "LoginPage" },
-        { name: "description", content: "Welcome to React Router!" },
+        { title: "Registro" },
+        { name: "description", content: "Crea tu cuenta en Kotitas" },
     ];
 }
 
@@ -63,34 +57,20 @@ export async function action({ request }: ActionFunctionArgs) {
     // Obtener datos del formulario enviado
     const form = await request.formData();
 
-    const data = {
-        name: form.get("name") as string,
-        email: form.get("email") as string,
-        password: form.get("password") as string,
-    };
+    const name = form.get("name") as string;
+    const email = form.get("email") as string;
+    const password = form.get("password") as string;
 
-    // Conexión a la base de datos
-    const db = await pool.connect();
-
-    // Instancia del repositorio
-    const repo = new IdentityRepo();
-
-    // Verifica si el usuario ya existe
-    const exists = await repo.exists(db, data.email);
-
-    if (exists) {
-        // ⚠️ Aquí deberías devolver un error al frontend
-        return;
+    if (!name || !email || !password) {
+        return { error: "Todos los campos son obligatorios" };
     }
 
-    // Crear entidad de usuario (incluye hash de password)
-    const user = await Identity.create(data);
-
-    // Guardar usuario en DB
-    await repo.save(db, user);
-
-    // ⚠️ Aquí deberías redirigir o iniciar sesión
-    return;
+    try {
+        const user = await authService.register(email, password, name);
+        return await createAuthenticatedSession(request, user.id, "/app/profile");
+    } catch (error: any) {
+        return { error: error.message || "Error al registrar el usuario" };
+    }
 }
 
 

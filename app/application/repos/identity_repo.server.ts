@@ -27,6 +27,17 @@ export default class IdentityRepo {
         console.log(err)
     }
 
+    async findByEmail(client: PoolClient, email: string): Promise<Identity | null> {
+        const [ok, val] = await pcall(() => client.query(
+            `SELECT * FROM identities WHERE LOWER(email) = LOWER($1) LIMIT 1`,
+            [email]
+        ));
+
+        if (!ok) throw val;
+        if (val.rows.length === 0) return null;
+        return Identity.fromDB(val.rows[0]);
+    }
+
     async exists(client: PoolClient, email: string): Promise<boolean> {
         const [ok, val] = await pcall(() => client.query(
             `SELECT EXISTS (
