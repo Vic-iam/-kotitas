@@ -20,7 +20,7 @@ export default function Home() {
                 </h1>
                 <div className="flex gap-5 text-center">
                 <Link to="/auth/login">Ir al login</Link>
-                <Link to="/auth/register">Ir al register</Link>
+                <Link to="/auth/register">Ir al register </Link>
                 </div>
             </div>
 
