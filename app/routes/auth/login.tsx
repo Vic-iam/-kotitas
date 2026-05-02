@@ -3,7 +3,7 @@ import {
   Link,
   useActionData,
   useNavigation,
-  type ActionFunctionArgs
+  type ActionFunctionArgs,
 } from "react-router";
 
 import type { Route } from "./+types/login";
@@ -19,7 +19,7 @@ type FormData = {
   password: string;
 };
 
-export function meta({ }: Route.MetaArgs) {
+export function meta({}: Route.MetaArgs) {
   return [
     { title: "LoginPage" },
     { name: "description", content: "Welcome to React Router!" },
@@ -64,24 +64,22 @@ export default function Login() {
     formState: { errors },
   } = useForm<FormData>();
 
-    const onSubmit = (data: FormData, e: any) => {
-        e?.target.submit();
-    };
-
+  const onSubmit = (data: FormData, e: any) => {
+    e?.target.submit();
+  };
 
   return (
     <div className="flex w-full min-h-[100svh] items-center justify-center">
-
       {isSubmitting ? (
         <Loader />
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 bg-surface min-w-sm p-5 rounded-xl ">
+          
+          <Link to="/" className="flex items-center">
+            <GoChevronLeft />
+          </Link>
 
-          <Link to="/" className="flex items-center">< GoChevronLeft/>Volver</Link>
-
-          <h1 className="text-xl text-center">
-            Iniciar sesión
-          </h1>
+          <h1 className="text-xl text-center">Iniciar sesión</h1>
 
           {/* ERROR BACKEND */}
           {actionData?.error && (
@@ -93,9 +91,8 @@ export default function Login() {
           <Form
             method="post"
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-surface min-w-sm p-5 rounded-xl space-y-3 flex flex-col"
+            className="flex flex-col gap-5"
           >
-
             {/* EMAIL */}
             <div className="flex flex-col">
               <label>Correo electrónico</label>
@@ -146,13 +143,11 @@ export default function Login() {
               {isSubmitting ? "Ingresando..." : "Iniciar sesión"}
             </Button>
 
-
-          {/* No sirve */}
+            {/* No sirve */}
             <p className="text-xs text-center">
               ¿No tienes cuenta?
               <Link to="/auth/register"> Registrate ahora</Link>
             </p>
-
           </Form>
         </div>
       )}
