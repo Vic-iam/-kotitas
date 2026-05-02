@@ -10,16 +10,12 @@ export default class IdentityRepo {
             `INSERT INTO identities (
                 id,
                 email,
-                hash,
-                salt,
-                cycles
-            ) VALUES ($1, $2, $3, $4, $5)`,
+                hash
+            ) VALUES ($1, $2, $3)`,
             [
                 id.id,
                 id.email,
                 id.hash,
-                id.salt,
-                id.cycles
             ]
         )
     }
@@ -32,6 +28,7 @@ export default class IdentityRepo {
 
         if (!ok) throw val;
         if (val.rows.length === 0) return null;
+
         return Identity.fromDB(val.rows[0]);
     }
 

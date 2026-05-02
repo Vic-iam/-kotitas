@@ -10,7 +10,7 @@ export type Credentials = {
 type IdentityDB = {
     id: string,
     email: string,
-    hash: string,
+    hash: Buffer<ArrayBufferLike>,
     created_at: Date,
     updated_at?: Date,
 }
@@ -57,7 +57,7 @@ export class Identity {
         return new Identity(
             data.id,
             data.email,
-            data.hash,
+            data.hash.toString(),
             data.created_at,
             data.updated_at,
         );
