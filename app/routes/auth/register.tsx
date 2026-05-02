@@ -117,17 +117,14 @@ export default function Register() {
               Volver
             </Link>
 
-            {/* Título */}
             <h1 className="text-xl text-foreground text-center">Registrarse</h1>
 
-            {/* Error del backend */}
             {actionData?.error && (
               <span className="text-red-500 text-sm text-center block">
                 {actionData.error}
               </span>
             )}
 
-            {/* Formulario */}
             <Form
               method="post"
               onSubmit={handleSubmit(onSubmit)}
@@ -137,21 +134,18 @@ export default function Register() {
                 gap-3
                 "
             >
-              {/* INPUT NOMBRE */}
               <div className="flex flex-col gap-1">
                 <label>Usuario</label>
 
                 <Input
                   type="text"
                   placeholder="Nombre de usuario"
-                  // Registro del input en RHF + validaciones
                   {...register("name", {
                     required: true,
                     minLength: 4,
                   })}
                 />
 
-                {/* Errores de validación */}
                 {errors?.name?.type === "required" && (
                   <span className="text-red-300 text-xs">
                     Nombre obligatorio
@@ -165,7 +159,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* INPUT EMAIL */}
               <div className="flex flex-col">
                 <label>Correo electronico</label>
 
@@ -184,7 +177,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* INPUT PASSWORD (COMPONENTE REUTILIZABLE) */}
               <div className="flex flex-col">
                 <label>Contraseña</label>
 
@@ -204,7 +196,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* INPUT CONFIRMAR PASSWORD */}
               <div className="flex flex-col">
                 <label>Repetir contraseña</label>
 
@@ -224,12 +215,10 @@ export default function Register() {
                 )}
               </div>
 
-              {/* BOTÓN SUBMIT */}
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Guardando..." : "Guadar"}
               </Button>
 
-              {/* LINK A LOGIN */}
               <p className="text-xs text-center">
                 ¿Ya tienes una cuenta?
                 <Link to="/auth/login"> Inicia sesion ahora</Link>

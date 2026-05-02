@@ -8,13 +8,11 @@ import UserRepo from "../../application/repos/user_repo.server";
 export async function loader({ request }: LoaderFunctionArgs) {
     const session = await requireAuthenticatedSession(request);
     
-    // In a real app, we might want to fetch the full user from DB if not in session
     const userRepo = new UserRepo();
     const client = await pool.connect();
     try {
         const user = await userRepo.findById(client, session.user_id);
         if (!user) {
-            // This shouldn't happen if session is valid and referential integrity holds
             return await logout(request);
         }
         return { user };

@@ -77,11 +77,11 @@ export default function Login() {
           
           <Link to="/" className="flex items-center">
             <GoChevronLeft />
+            Volver
           </Link>
 
           <h1 className="text-xl text-center">Iniciar sesión</h1>
 
-          {/* ERROR BACKEND */}
           {actionData?.error && (
             <p className="text-red-500 text-sm text-center">
               {actionData.error}
@@ -93,7 +93,6 @@ export default function Login() {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-5"
           >
-            {/* EMAIL */}
             <div className="flex flex-col">
               <label>Correo electrónico</label>
 
@@ -116,7 +115,6 @@ export default function Login() {
               )}
             </div>
 
-            {/* PASSWORD */}
             <div className="flex flex-col">
               <label>Contraseña</label>
 
@@ -143,7 +141,6 @@ export default function Login() {
               {isSubmitting ? "Ingresando..." : "Iniciar sesión"}
             </Button>
 
-            {/* No sirve */}
             <p className="text-xs text-center">
               ¿No tienes cuenta?
               <Link to="/auth/register"> Registrate ahora</Link>
