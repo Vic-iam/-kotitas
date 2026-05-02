@@ -37,9 +37,6 @@ type FormData = {
 };
 
 
-/**
- * Meta información de la página (SEO / título)
- */
 export function meta({ }: Route.MetaArgs) {
     return [
         { title: "Registro" },
@@ -48,10 +45,6 @@ export function meta({ }: Route.MetaArgs) {
 }
 
 
-/**
- * Action (backend en React Router)
- * Se ejecuta cuando el usuario envía el formulario
- */
 export async function action({ request }: ActionFunctionArgs) {
 
     // Obtener datos del formulario enviado
@@ -79,20 +72,11 @@ export async function action({ request }: ActionFunctionArgs) {
  */
 export default function Register() {
 
-    // Estado de navegación (loading al enviar form)
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
 
-    // Datos devueltos desde el action (errores backend)
     const actionData = useActionData() as { error?: string };
 
-    /**
-     * Hook de React Hook Form
-     * Maneja:
-     * - registro de inputs
-     * - validaciones
-     * - errores
-     */
     const {
         register,
         handleSubmit,
@@ -100,10 +84,6 @@ export default function Register() {
         getValues,
     } = useForm<FormData>();
 
-    /**
-     * Función que intercepta el submit
-     * y deja que React Router maneje el envío real
-     */
     const onSubmit = (data: FormData, e: any) => {
         e?.target.submit();
     };
@@ -118,7 +98,7 @@ export default function Register() {
 
                     <div className="space-y-4">
 
-                        <Link to="/" className="flex items-center">< GoChevronLeft/>Volver</Link>
+                        <Link to="/" className="flex items-center">< GoChevronLeft />Volver</Link>
 
                         {/* Título */}
                         <h1 className="text-xl text-foreground text-center">

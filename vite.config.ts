@@ -9,4 +9,8 @@ export default defineConfig({
         reactRouter(),
         tsconfigPaths()
     ],
+    server: {
+        port: 3000,
+        strictPort: true
+    }
 });

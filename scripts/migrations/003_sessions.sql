@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS sessions (
     id                  UUID PRIMARY KEY,
     user_id             UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    provider            VARCHAR(20) NOT NULL,
     expires_at          TIMESTAMPTZ NOT NULL,
     absolute_expires_at TIMESTAMPTZ NOT NULL,
     created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
