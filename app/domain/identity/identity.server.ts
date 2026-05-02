@@ -7,25 +7,23 @@ export type Credentials = {
     password: string,
 }
 
+type IdentityDB = {
+    id: string,
+    email: string,
+    hash: string,
+    created_at: Date,
+    updated_at?: Date,
+}
+
 export class Identity {
 
     private constructor(
         readonly id: string,
         readonly email: string,
-        private _salt: Buffer<ArrayBufferLike>,
-        private _cycles: number,
         private _hash: string,
         readonly createdAt?: Date,
         readonly updatedAt?: Date,
     ) { }
-
-    public get salt(): Buffer<ArrayBufferLike> {
-        return this._salt;
-    }
-
-    public get cycles(): number {
-        return this._cycles;
-    }
 
     public get hash(): string {
         return this._hash;
@@ -37,8 +35,6 @@ export class Identity {
         return new Identity(
             uuid(),
             creds.email,
-            salt,
-            cycles,
             await Identity.hashPassword(
                 creds.password,
                 salt,
@@ -57,15 +53,13 @@ export class Identity {
         }
     }
 
-    public static fromDB(data: any): Identity {
+    public static fromDB(data: IdentityDB): Identity {
         return new Identity(
             data.id,
             data.email,
-            data.salt,
-            data.cycles,
             data.hash,
-            data.created_at ? new Date(data.created_at) : undefined,
-            data.updated_at ? new Date(data.updated_at) : undefined,
+            data.created_at,
+            data.updated_at,
         );
     }
 
