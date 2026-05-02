@@ -85,7 +85,6 @@ export default function Login() {
                         Iniciar sesión
                     </h1>
 
-                    {/* ERROR BACKEND */}
                     {actionData?.error && (
                         <p className="text-red-500 text-sm text-center">
                             {actionData.error}
@@ -98,7 +97,6 @@ export default function Login() {
                         className="bg-surface min-w-sm p-5 rounded-xl space-y-3 flex flex-col"
                     >
 
-                        {/* EMAIL */}
                         <div className="flex flex-col">
                             <label>Correo electrónico</label>
 
@@ -121,7 +119,6 @@ export default function Login() {
                             )}
                         </div>
 
-                        {/* PASSWORD */}
                         <div className="flex flex-col">
                             <label>Contraseña</label>
 
