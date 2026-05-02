@@ -9,7 +9,4 @@ CREATE TABLE IF NOT EXISTS user_roles (
     rol_id UUID REFERENCES roles(id)
 );
 
-INSERT INTO roles (
-)
-
 
