@@ -13,7 +13,7 @@ import {
     Link,
     useActionData,
     useNavigation,
-    type ActionFunctionArgs
+    type ActionFunctionArgs,
 } from "react-router";
 
 // Loader visual mientras se envía el formulario
@@ -24,7 +24,6 @@ import { useForm } from "react-hook-form";
 
 import { authService } from "../../application/services/auth_service.server";
 import { createAuthenticatedSession } from "../../infra/auth.server";
-
 
 /**
  * Tipo que define la estructura de los datos del formulario
@@ -44,9 +43,7 @@ export function meta({ }: Route.MetaArgs) {
     ];
 }
 
-
 export async function action({ request }: ActionFunctionArgs) {
-
     // Obtener datos del formulario enviado
     const form = await request.formData();
 
@@ -66,15 +63,13 @@ export async function action({ request }: ActionFunctionArgs) {
     }
 }
 
-
 /**
  * Componente principal de registro
  */
 export default function Register() {
-
+    // Estado de navegación (loading al enviar form)
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
-
     const actionData = useActionData() as { error?: string };
 
     const {
@@ -88,10 +83,8 @@ export default function Register() {
         e?.target.submit();
     };
 
-
     return (
         <div className="flex w-full min-h-[100svh] items-center justify-center">
-
             {
                 // Mostrar loader mientras se envía
                 isSubmitting ? <Loader /> :
@@ -117,67 +110,58 @@ export default function Register() {
                             method='post'
                             onSubmit={handleSubmit(onSubmit)}
                             className="
-                bg-surface
-                min-w-sm
-                p-5
-                rounded-xl
-                space-y-2
-                flex
-                flex-col"
+                                bg-surface
+                                min-w-sm
+                                p-5
+                                rounded-xl
+                                space-y-2
+                                flex
+                                flex-col
+                                gap-3"
                         >
-
-                            {/* INPUT NOMBRE */}
                             <div className="flex flex-col gap-1">
                                 <label>Usuario</label>
 
                                 <Input
                                     type="text"
                                     placeholder="Nombre de usuario"
-
-                                    // Registro del input en RHF + validaciones
                                     {...register("name", {
                                         required: true,
-                                        minLength: 4
+                                        minLength: 4,
                                     })}
                                 />
 
-                                {/* Errores de validación */}
-                                {errors?.name?.type === "required" &&
+                                {errors?.name?.type === "required" && (
                                     <span className="text-red-300 text-xs">
                                         Nombre obligatorio
                                     </span>
-                                }
+                                )}
 
-                                {errors?.name?.type === "minLength" &&
+                                {errors?.name?.type === "minLength" && (
                                     <span className="text-red-300 text-xs">
                                         El nombre minimo necesita 4 caracteres
                                     </span>
-                                }
+                                )}
                             </div>
 
-
-                            {/* INPUT EMAIL */}
                             <div className="flex flex-col">
                                 <label>Correo electronico</label>
 
                                 <Input
                                     type="email"
                                     placeholder="email@example.com"
-
                                     {...register("email", {
-                                        required: true
+                                        required: true,
                                     })}
                                 />
 
-                                {errors?.email?.type === "required" &&
+                                {errors?.email?.type === "required" && (
                                     <span className="text-red-300 text-xs">
                                         Correo obligatorio
                                     </span>
-                                }
+                                )}
                             </div>
 
-
-                            {/* INPUT PASSWORD (COMPONENTE REUTILIZABLE) */}
                             <div className="flex flex-col">
                                 <label>Contraseña</label>
 
@@ -186,19 +170,17 @@ export default function Register() {
                                     placeholder="**********"
                                     {...register("password", {
                                         required: true,
-                                        minLength: 6
+                                        minLength: 6,
                                     })}
                                 />
 
-                                {errors.password &&
+                                {errors.password && (
                                     <span className="text-red-300 text-xs">
                                         {errors.password.message}
                                     </span>
-                                }
+                                )}
                             </div>
 
-
-                            {/* INPUT CONFIRMAR PASSWORD */}
                             <div className="flex flex-col">
                                 <label>Repetir contraseña</label>
 
@@ -207,34 +189,28 @@ export default function Register() {
                                     placeholder="**********"
                                     {...register("rePassword", {
                                         required: true,
-                                        validate: (value) =>
-                                            value === getValues().password
+                                        validate: (value) => value === getValues().password,
                                     })}
                                 />
 
-                                {errors?.rePassword?.type === "validate" &&
+                                {errors?.rePassword?.type === "validate" && (
                                     <span className="text-red-300 text-xs">
                                         Las contraseña no coinciden
                                     </span>
-                                }
+                                )}
                             </div>
 
-
-                            {/* BOTÓN SUBMIT */}
                             <Button type="submit" disabled={isSubmitting}>
                                 {isSubmitting ? "Guardando..." : "Guadar"}
                             </Button>
 
-
-                            {/* LINK A LOGIN */}
                             <p className="text-xs text-center">
                                 ¿Ya tienes una cuenta?
                                 <Link to="/auth/login"> Inicia sesion ahora</Link>
                             </p>
-
                         </Form>
                     </div>
             }
-        </div>
+        </div >
     );
 }
