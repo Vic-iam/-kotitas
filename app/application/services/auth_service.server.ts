@@ -21,8 +21,6 @@ export class AuthService {
                 throw new Error("Invalid credentials");
             }
 
-            console.log('Tamos aqui')
-
             const isValid = await identity.checkPassword(password);
             if (!isValid) {
                 throw new Error("Invalid credentials");
