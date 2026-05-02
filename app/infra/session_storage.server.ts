@@ -57,6 +57,7 @@ export const { getSession, commitSession, destroySession } = createSessionStorag
         }
     },
     async deleteData(id) {
+        if (!id) return
         const client = await pool.connect();
         try {
             await sessionRepo.delete(client, id);
@@ -70,9 +71,9 @@ export const { getSession, commitSession, destroySession } = createSessionStorag
  * Helper to extract client information for session creation.
  */
 export function getClientInfo(request: Request) {
-    const ip = request.headers.get("x-forwarded-for") || 
-               request.headers.get("x-real-ip") || 
-               "127.0.0.1";
+    const ip = request.headers.get("x-forwarded-for") ||
+        request.headers.get("x-real-ip") ||
+        "127.0.0.1";
     const user_agent = request.headers.get("user-agent") || "unknown";
     return { ip, user_agent };
 }

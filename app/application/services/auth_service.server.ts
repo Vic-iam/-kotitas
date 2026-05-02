@@ -14,11 +14,14 @@ export class AuthService {
      */
     async login(email: string, password: string): Promise<User> {
         const client = await pool.connect();
+
         try {
             const identity = await identityRepo.findByEmail(client, email);
             if (!identity) {
                 throw new Error("Invalid credentials");
             }
+
+            console.log('Tamos aqui')
 
             const isValid = await identity.checkPassword(password);
             if (!isValid) {
@@ -41,28 +44,35 @@ export class AuthService {
      * Performs both operations in a transaction.
      */
     async register(email: string, password: string, name: string): Promise<User> {
-        const client = await pool.connect();
+        const db = await pool.connect();
         try {
-            await client.query("BEGIN");
+            await db.query("BEGIN");
 
-            const exists = await identityRepo.exists(client, email);
+            const exists = await identityRepo.exists(db, email);
             if (exists) {
                 throw new Error("Email already registered");
             }
 
             const identity = await Identity.create({ email, password });
-            await identityRepo.save(client, identity);
+            await identityRepo.save(db, identity);
+            const user = new User({
+                name, email,
+                identities: [{
+                    provider_user_id: identity.id,
+                    provider: "kotitas"
+                }]
+            });
 
-            const user = new User({ name, email });
-            await userRepo.save(client, user);
 
-            await client.query("COMMIT");
+            await userRepo.save(db, user);
+            await db.query("COMMIT");
+
             return user;
         } catch (error) {
-            await client.query("ROLLBACK");
+            await db.query("ROLLBACK");
             throw error;
         } finally {
-            client.release();
+            db.release();
         }
     }
 }

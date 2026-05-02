@@ -1,9 +1,19 @@
 import fs from 'fs';
 import path from 'path';
-import pool from '../app/db.server';
+import { fileURLToPath } from 'url';
+import { Pool } from "pg";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export default async function install() {
+const pool = new Pool({
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT || '5432'),
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+});
+
+async function install() {
     const client = await pool.connect()
 
     try {
@@ -32,6 +42,9 @@ export default async function install() {
         process.exit(1);
     } finally {
         client.release();
+        await pool.end();
     }
-};
+}
+
+install();
 

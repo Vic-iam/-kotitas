@@ -1,12 +1,12 @@
 import type { PoolClient } from "pg";
-import type { Identity } from "~/domain/identity/identity.server";
+import { Identity } from "~/domain/identity/identity.server";
 import { pcall } from "~/utils/pcall";
 
 
 export default class IdentityRepo {
 
     async save(client: PoolClient, id: Identity): Promise<void> {
-        const [ok, err] = await pcall(() => client.query(
+        await client.query(
             `INSERT INTO identities (
                 id,
                 email,
@@ -21,10 +21,7 @@ export default class IdentityRepo {
                 id.salt,
                 id.cycles
             ]
-        ))
-
-        if (ok) return
-        console.log(err)
+        )
     }
 
     async findByEmail(client: PoolClient, email: string): Promise<Identity | null> {

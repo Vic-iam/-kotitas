@@ -63,9 +63,6 @@ export async function action({ request }: ActionFunctionArgs) {
     }
 }
 
-/**
- * Componente principal de registro
- */
 export default function Register() {
     // Estado de navegación (loading al enviar form)
     const navigation = useNavigation();

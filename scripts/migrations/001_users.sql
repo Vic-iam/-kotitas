@@ -4,3 +4,8 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT NOT NULL UNIQUE
 );
 
+CREATE TABLE IF NOT EXISTS user_identities (
+    user_id UUID NOT NULL,
+    provider_user_id UUID NOT NULL,
+    provider VARCHAR(20) NOT NULL
+)
